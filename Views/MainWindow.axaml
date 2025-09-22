@@ -15,15 +15,60 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <StackPanel>
-        <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Text="{Binding Saludo}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ComboBox Width="200" HorizontalAlignment="Center" ItemsSource="{Binding Lista}" SelectedIndex="0" SelectedItem="{Binding Boli.Color}"></ComboBox>
-        <TextBox Width="80" Margin="10" Text="{Binding Boli.Codigo}"></TextBox>
-        <CheckBox Content="kieres o no" HorizontalAlignment="Center" Margin="10" Name="condiciones"
-                  IsChecked="False"></CheckBox>
-        <TextBlock Text="{Binding  Path=Mensaje}" Foreground="Crimson" Margin="10" HorizontalAlignment="Center"></TextBlock>
-        <Button Width="200" Content="CREAR" Command="{Binding MostrarBoliCommand}" 
-                HorizontalAlignment="Center" HorizontalContentAlignment="Center" CommandParameter="{Binding ElementName=condiciones, Path=IsChecked}"></Button>
-    </StackPanel>
+    
+    
+    <UniformGrid Columns="2">
+        <!--formulario-->
+        <StackPanel Margin="30">
+            <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Saludo}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox Width="200" HorizontalAlignment="Center" ItemsSource="{Binding Lista}" SelectedIndex="0" SelectedItem="{Binding Boli.Color}"></ComboBox>
+            <TextBox Width="80" Margin="10" Text="{Binding Boli.Codigo}"></TextBox>
+            <CheckBox Content="kieres o no" HorizontalAlignment="Center" Margin="10" Name="Condiciones"
+                      IsChecked="False"></CheckBox>
+            <CheckBox HorizontalAlignment="Center"
+                      Margin="10"
+                      Command="{Binding MostrarOpcionesAvanzadasCommand}"
+                      Content="Avanzadas"/>
+            <StackPanel IsVisible="{Binding Avanzadas}" Orientation="Horizontal" Background="Pink" HorizontalAlignment="Center" Width="200">
+                <TextBox Margin="5" HorizontalAlignment="Center" Width="90">
+                
+                </TextBox>
+                <TextBox Margin="5" HorizontalAlignment="Center" Width="90">
+                
+                </TextBox>
+            </StackPanel>
+        
+            <TextBlock Text="{Binding  Path=Mensaje}" Foreground="Crimson" Margin="10" HorizontalAlignment="Center"></TextBlock>
+            <Button Width="200" Content="CREAR" Command="{Binding MostrarBoliCommand}" 
+                    HorizontalAlignment="Center" HorizontalContentAlignment="Center" CommandParameter="{Binding ElementName=Condiciones, Path=IsChecked}"></Button>
+        </StackPanel>
+        
+        <!--consultas-->
+        <StackPanel>
+            <ComboBox ItemsSource="{Binding Boligrafos}">
+                
+            </ComboBox>
+            <ListBox Background="Pink" ItemsSource="{Binding
+            Boligrafos}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="10" CornerRadius="10" BorderThickness="2">
+                            <StackPanel>
+                                <Image Source="avares://Bindings/Assets/Room1.webp"
+                                       Width="50">
+                                </Image>
+                                <TextBlock Text="{Binding Codigo}"
+                                           HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="{Binding Color}"
+                                           HorizontalAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                
+            </ListBox>
+        </StackPanel>
+    </UniformGrid>
+    
 </Window>
