@@ -25,7 +25,8 @@
             <ComboBox Width="200" HorizontalAlignment="Center" ItemsSource="{Binding Lista}" SelectedIndex="0" SelectedItem="{Binding Boli.Color}"></ComboBox>
             <TextBox Width="80" Margin="10" Text="{Binding Boli.Codigo}"></TextBox>
             <CheckBox Content="kieres o no" HorizontalAlignment="Center" Margin="10" Name="Condiciones"
-                      IsChecked="False"></CheckBox>
+                      IsChecked="False" Command="{Binding EstadoInicialCheckCommand}"
+                      CommandParameter="{Binding ElementName=Condiciones}"></CheckBox>
             <CheckBox HorizontalAlignment="Center"
                       Margin="10"
                       Command="{Binding MostrarOpcionesAvanzadasCommand}"
@@ -41,7 +42,7 @@
         
             <TextBlock Text="{Binding  Path=Mensaje}" Foreground="Crimson" Margin="10" HorizontalAlignment="Center"></TextBlock>
             <Button Width="200" Content="CREAR" Command="{Binding MostrarBoliCommand}" 
-                    HorizontalAlignment="Center" HorizontalContentAlignment="Center" CommandParameter="{Binding ElementName=Condiciones, Path=IsChecked}"></Button>
+                    HorizontalAlignment="Center" HorizontalContentAlignment="Center" CommandParameter="{Binding ElementName=Condiciones}"></Button>
         </StackPanel>
         
         <!--consultas-->
@@ -50,11 +51,20 @@
                 
             </ComboBox>
             <ListBox Background="Pink" ItemsSource="{Binding
-            Boligrafos}">
+            Boligrafos}" SelectedItem="{Binding BoliSeleccionado}">
+                <Interaction.Behaviors>
+                    <EventTriggerBehavior EventName="DoubleTapped">
+                        <InvokeCommandAction Command="{Binding CargarBoliSeleccionadoCommand}">
+                                            
+                        </InvokeCommandAction>
+                    </EventTriggerBehavior>
+                                   
+                </Interaction.Behaviors>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="10" CornerRadius="10" BorderThickness="2">
                             <StackPanel>
+                                
                                 <Image Source="avares://Bindings/Assets/Room1.webp"
                                        Width="50">
                                 </Image>

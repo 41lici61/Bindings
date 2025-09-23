@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Avalonia.Controls;
+using Avalonia.Media;
 using Bindings.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -23,12 +25,16 @@ public partial class MainWindowViewModel : ViewModelBase
     
     [ObservableProperty]
     private Boligrafo boli = new Boligrafo();
+    
+    [ObservableProperty]
+    private Boligrafo boliSeleccionado = new Boligrafo();
 
     public MainWindowViewModel()
     {
         CargarCombo();
         CargarBolis();
     }
+    
     
 
     private void CargarBolis()
@@ -49,6 +55,12 @@ public partial class MainWindowViewModel : ViewModelBase
         Boligrafos.Add(boli3);
     }
 
+    [RelayCommand]//para que salga command en la vista
+    public void CargarBoliSeleccionado()
+    {
+        Boli = BoliSeleccionado;
+    }
+
     public ObservableCollection<string> Lista { set; get; } = new()
     {
         "Rosa", "Fucsia", "Perla", "topacio", "oro viejo", "Pastel"
@@ -62,13 +74,27 @@ public partial class MainWindowViewModel : ViewModelBase
         };
         Boli.Color = Lista[0];
     }
-    
-    
+
+    [RelayCommand]
+    public void EstadoInicialCheck(Object parameter)//cambia el color de las letras del check segun su estado
+    {
+        CheckBox check = (CheckBox)parameter;
+        if (check.IsChecked == true)
+        {
+            check.Foreground=Brushes.DeepPink;
+            check.FontWeight = FontWeight.Normal;
+        }else{
+            check.Foreground=Brushes.CadetBlue;
+            check.FontWeight = FontWeight.Normal;
+        }
+    }
+
 
     [RelayCommand]
     public void MostrarBoli(object parameter)
     {
-        if (parameter is false)
+        CheckBox check = (CheckBox)parameter;
+        if (check.IsChecked is false)
         {
             Mensaje = "Marcar el check";
             Console.WriteLine("Marcar el chek");
@@ -86,6 +112,7 @@ public partial class MainWindowViewModel : ViewModelBase
             Console.WriteLine(Boli.Codigo+" "+Boli.Color);
             Boligrafos.Add(Boli);
             Boli = new Boligrafo();//para borrar los campos, para ello el modelo debe ser observable
+            check.IsChecked = false;
         }
 
     }
