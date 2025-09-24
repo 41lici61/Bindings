@@ -60,6 +60,13 @@
                     </EventTriggerBehavior>
                                    
                 </Interaction.Behaviors>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel>
+                            <!-- es lo q hace q los elementos se reorganicen en cualquier tipo de pantalla-->
+                        </WrapPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="10" CornerRadius="10" BorderThickness="2">
